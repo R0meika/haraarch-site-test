@@ -936,6 +936,7 @@ a.project-row:focus-visible .project-render img {
   }
 
   .works {
+    margin-top: 34px;
     padding-left: var(--page-gutter);
     padding-right: var(--page-gutter);
   }
@@ -957,12 +958,22 @@ a.project-row:focus-visible .project-render img {
   }
 
   .info-bar-grid {
-    gap: 22px;
-    padding: 18px 0 0;
+    gap: 0;
+    padding: 16px 0 0;
+  }
+
+  .info-bar .hero-meta,
+  .info-bar .info-contact {
+    display: none;
+  }
+
+  .lead {
+    max-width: 28rem;
+    line-height: 1.58;
   }
 
   .hero {
-    padding-top: 34px;
+    padding-top: 28px;
     min-height: auto;
   }
 
