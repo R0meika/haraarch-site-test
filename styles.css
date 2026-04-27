@@ -947,9 +947,13 @@ a.project-row:focus-visible .project-render img {
   }
 
   .works {
-    margin-top: 34px;
+    margin-top: 24px;
     padding-left: var(--page-gutter);
     padding-right: var(--page-gutter);
+  }
+
+  .works .section-heading {
+    display: none;
   }
 
   .info-bar {
@@ -957,7 +961,7 @@ a.project-row:focus-visible .project-render img {
     right: 0;
     left: 0;
     padding: 0 var(--page-gutter);
-    margin-top: 30px;
+    margin-top: 18px;
     background: transparent;
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
@@ -969,7 +973,7 @@ a.project-row:focus-visible .project-render img {
 
   .info-bar-grid {
     gap: 0;
-    padding: 14px 0 0;
+    padding: 0;
   }
 
   .info-bar .hero-meta,
@@ -978,7 +982,8 @@ a.project-row:focus-visible .project-render img {
   }
 
   .lead {
-    max-width: 28rem;
+    max-width: none;
+    margin: 0;
     line-height: 1.58;
   }
 
