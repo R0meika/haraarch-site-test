@@ -358,7 +358,7 @@ a.project-row:focus-visible {
   display: grid;
   align-content: start;
   align-self: start;
-  gap: 18px;
+  gap: 20px;
   grid-column: 1;
   grid-row: 2 / span 2;
   max-width: 28rem;
@@ -395,21 +395,24 @@ a.project-row:focus-visible {
 
 .project-details {
   display: grid;
-  gap: 8px;
+  gap: 0;
   padding: 0;
+  border-top: 1px solid rgba(17, 19, 21, 0.18);
   list-style: none;
   color: var(--muted);
   font-size: clamp(0.9rem, 0.84rem + 0.16vw, 0.98rem);
-  line-height: 1.36;
+  line-height: 1.38;
 }
 
 .project-details li {
-  display: grid;
-  grid-template-columns: 86px minmax(0, 1fr);
-  gap: 14px;
+  display: block;
+  padding: 9px 0 10px;
+  border-bottom: 1px solid rgba(17, 19, 21, 0.18);
 }
 
 .project-details span {
+  display: block;
+  margin-bottom: 3px;
   color: var(--text);
 }
 
@@ -422,6 +425,7 @@ a.project-row:focus-visible {
   color: rgba(17, 19, 21, 0.78);
   font-size: clamp(0.92rem, 0.86rem + 0.18vw, 1rem);
   line-height: 1.58;
+  text-align: left;
 }
 
 .project-render {
@@ -532,8 +536,14 @@ a.project-row:focus-visible .project-render img {
 
   .project-index-link {
     display: block;
+    padding: 10px 0 11px;
+    border-top: 1px solid rgba(17, 19, 21, 0.18);
     color: rgba(17, 19, 21, 0.38);
     line-height: 1.2;
+  }
+
+  .project-index-link:last-child {
+    border-bottom: 1px solid rgba(17, 19, 21, 0.18);
   }
 
   .project-index-link small {
@@ -701,21 +711,21 @@ a.project-row:focus-visible .project-render img {
   margin: 0;
   line-height: 1.62;
   color: rgba(17, 19, 21, 0.82);
-  text-align: justify;
-  text-wrap: pretty;
+  text-align: left;
 }
 
 .project-facts {
   grid-column: 8 / span 4;
   display: grid;
-  gap: 7px;
+  gap: 0;
+  border-top: 1px solid rgba(17, 19, 21, 0.18);
 }
 
 .project-facts p {
-  display: grid;
-  grid-template-columns: 108px minmax(0, 1fr);
-  gap: 16px;
+  display: block;
   margin: 0;
+  padding: 9px 0 10px;
+  border-bottom: 1px solid rgba(17, 19, 21, 0.18);
   line-height: 1.48;
   color: var(--muted);
 }
@@ -723,6 +733,7 @@ a.project-row:focus-visible .project-render img {
 .project-facts span {
   display: block;
   min-width: 0;
+  margin-bottom: 3px;
   color: var(--text);
 }
 
@@ -733,6 +744,10 @@ a.project-row:focus-visible .project-render img {
 .project-gallery-shell {
   position: relative;
   display: block;
+}
+
+.project-switcher {
+  display: none;
 }
 
 .project-gallery-controls {
@@ -1062,7 +1077,41 @@ a.project-row:focus-visible .project-render img {
   }
 
   .project-facts p {
-    grid-template-columns: 88px minmax(0, 1fr);
+    display: block;
+  }
+
+  .project-switcher {
+    display: block;
+    margin: 46px var(--page-gutter) 0;
+    padding-top: 18px;
+    border-top: 1px solid rgba(17, 19, 21, 0.18);
+  }
+
+  .project-switcher-title {
+    margin: 0 0 8px;
+    color: var(--muted);
+  }
+
+  .project-switcher-list {
+    display: grid;
+  }
+
+  .project-switcher-link {
+    display: block;
+    padding: 13px 0 14px;
+    border-top: 1px solid rgba(17, 19, 21, 0.18);
+    line-height: 1.24;
+  }
+
+  .project-switcher-link:last-child {
+    border-bottom: 1px solid rgba(17, 19, 21, 0.18);
+  }
+
+  .project-switcher-link small {
+    display: block;
+    margin-top: 4px;
+    color: var(--muted);
+    line-height: 1.35;
   }
 
   .project-gallery figure.gallery-item--landscape {
@@ -1246,7 +1295,7 @@ a.project-row:focus-visible .project-render img {
   }
 
   .project-page-hero {
-    padding-top: 18px;
+    padding-top: 16px;
   }
 
   .project-page-title {
@@ -1259,7 +1308,7 @@ a.project-row:focus-visible .project-render img {
 
   .project-page-grid {
     gap: 18px;
-    padding-top: 28px;
+    padding-top: 10px;
   }
 
   .project-page-summary {
@@ -1271,18 +1320,12 @@ a.project-row:focus-visible .project-render img {
     text-align: left;
   }
 
-  .project-page-summary p:nth-of-type(n + 2) {
-    display: none;
-  }
-
   .project-facts {
-    gap: 8px;
     margin-top: 2px;
   }
 
   .project-facts p {
-    grid-template-columns: 76px minmax(0, 1fr);
-    gap: 10px;
+    display: block;
     line-height: 1.45;
   }
 

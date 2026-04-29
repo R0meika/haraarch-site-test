@@ -89,6 +89,28 @@ const buildProjectIndex = () => {
     window.requestAnimationFrame(centerCurrentProject);
     window.addEventListener("load", centerCurrentProject, { once: true });
   }
+
+  const projectSwitcher = document.createElement("nav");
+  projectSwitcher.className = "project-switcher";
+  projectSwitcher.setAttribute("aria-label", "Другие проекты");
+  projectSwitcher.innerHTML = `
+    <p class="project-switcher-title">Другие проекты</p>
+    <div class="project-switcher-list">
+      ${projectNavItems
+        .filter((item) => item.href !== currentFile)
+        .map(
+          (item) => `
+            <a class="project-switcher-link" href="${item.href}">
+              <span>${item.title}</span>
+              <small>${item.meta} | ${item.status}</small>
+            </a>
+          `
+        )
+        .join("")}
+    </div>
+  `;
+
+  projectMain.append(projectSwitcher);
 };
 
 const buildPracticePanel = () => {
