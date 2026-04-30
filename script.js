@@ -53,8 +53,10 @@ const buildProjectIndex = () => {
   projectIndex.setAttribute("aria-label", "Навигация по проектам");
   projectIndex.innerHTML = `
     <div class="project-index-block project-index-block--primary">
+      <p class="project-index-title">Другие проекты</p>
       <nav class="project-index-list">
         ${projectNavItems
+          .filter((item) => item.href !== currentFile)
           .map((item) => {
             const isCurrent = item.href === currentFile;
             return `
@@ -113,6 +115,26 @@ const buildProjectIndex = () => {
   projectMain.append(projectSwitcher);
 };
 
+const buildMobileServiceNav = () => {
+  const shell = document.querySelector(".site-shell");
+  const topbar = document.querySelector(".topbar");
+  const projectMain = document.querySelector(".project-page-main");
+
+  if (!shell || !topbar || projectMain || document.querySelector(".mobile-service-nav")) {
+    return;
+  }
+
+  const serviceNav = document.createElement("nav");
+  serviceNav.className = "mobile-service-nav";
+  serviceNav.setAttribute("aria-label", "Разделы практики");
+  serviceNav.innerHTML = `
+    <span>Архитектура</span>
+    <span>Дизайн</span>
+  `;
+
+  topbar.insertAdjacentElement("afterend", serviceNav);
+};
+
 const buildPracticePanel = () => {
   const projectMain = document.querySelector(".project-page-main");
   const footer = document.querySelector(".footer");
@@ -143,6 +165,7 @@ const buildPracticePanel = () => {
   footer.parentNode.insertBefore(panel, footer);
 };
 
+buildMobileServiceNav();
 buildProjectIndex();
 buildPracticePanel();
 
