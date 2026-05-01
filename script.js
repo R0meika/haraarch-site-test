@@ -61,11 +61,12 @@ const buildIntroOverlay = () => {
     const russianLetters = ["Х", "А", "Р", "А'"];
     const rowDelayBase = 1;
     const columnDelayBase = 5;
-    const greekDelayBase = 9;
-    const bubbleDelay = 13;
-    const russianDelayBase = 15;
-    const dimensionDelay = 19;
-    const captionDelay = 21;
+    const greekCircleDelayBase = 9;
+    const russianCircleDelayBase = 13;
+    const greekLetterDelayBase = 17;
+    const russianLetterDelayBase = 21;
+    const dimensionDelay = 25;
+    const captionDelay = 27;
 
     const line = (className, x1, y1, x2, y2, delay) =>
       `<line class="intro-line intro-axis ${className} intro-delay-${delay}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" />`;
@@ -93,7 +94,7 @@ const buildIntroOverlay = () => {
     const buildHorizontalAxis = (y, index) => {
       const delay = rowDelayBase + index;
       const parts = [
-        line("intro-h", layout.leftX + layout.r, y, layout.cols[0] - layout.nodeArm, y, delay),
+        line("intro-h", layout.leftX, y, layout.cols[0] - layout.nodeArm, y, delay),
         ...layout.cols.map((x) => line("intro-h intro-axis-node", x - layout.nodeArm, y, x + layout.nodeArm, y, delay)),
       ];
 
@@ -114,7 +115,15 @@ const buildIntroOverlay = () => {
       layout.rows.slice(0, -1).forEach((y, rowIndex) => {
         parts.push(segmentedRange(y + layout.nodeArm, layout.rows[rowIndex + 1] - layout.nodeArm, x, delay, "v"));
       });
-      parts.push(line("intro-v", x, layout.rows[layout.rows.length - 1] + layout.nodeArm, x, layout.bottomY - layout.r, delay));
+      const lowerStartY = layout.rows[layout.rows.length - 1] + layout.nodeArm;
+      const crossesCaption = x > layout.captionMaskX && x < layout.captionMaskX + layout.captionMaskWidth;
+
+      if (crossesCaption) {
+        parts.push(line("intro-v", x, lowerStartY, x, layout.captionMaskY - layout.captionClearPad, delay));
+        parts.push(line("intro-v", x, layout.dimY, x, layout.bottomY, delay));
+      } else {
+        parts.push(line("intro-v", x, lowerStartY, x, layout.bottomY, delay));
+      }
 
       return parts.join("");
     };
@@ -126,9 +135,9 @@ const buildIntroOverlay = () => {
       .map(
         (y, index) => `
           <g class="intro-mark intro-greek-mark" transform="translate(${layout.leftX} ${y})">
-            <g class="intro-mark-content intro-delay-${greekDelayBase + index}">
-              <circle r="${layout.r}" />
-              <text class="intro-greek-letter intro-greek-letter-${index}">${greekLetters[index]}</text>
+            <g>
+              <circle class="intro-axis-bubble intro-delay-${greekCircleDelayBase + index}" r="${layout.r}" />
+              <text class="intro-greek-letter intro-greek-letter-${index} intro-delay-${greekLetterDelayBase + index}">${greekLetters[index]}</text>
             </g>
           </g>`
       )
@@ -136,7 +145,7 @@ const buildIntroOverlay = () => {
 
     const russianMarks = layout.cols
       .map((x, index) => {
-        const delay = russianDelayBase + index;
+        const delay = russianLetterDelayBase + index;
         const letter =
           index === 3
             ? `
@@ -146,7 +155,7 @@ const buildIntroOverlay = () => {
 
         return `
           <g class="intro-mark intro-russian-mark" transform="translate(${x} ${layout.bottomY})">
-            <circle class="intro-axis-bubble intro-delay-${bubbleDelay}" r="${layout.r}" />
+            <circle class="intro-axis-bubble intro-delay-${russianCircleDelayBase + index}" r="${layout.r}" />
             ${letter}
           </g>`;
       })
@@ -204,6 +213,7 @@ const buildIntroOverlay = () => {
     captionMaskY: 470,
     captionMaskWidth: 346,
     captionMaskHeight: 26,
+    captionClearPad: 9,
     r: 32,
     nodeArm: 22,
     dotGap: 7,
@@ -217,31 +227,32 @@ const buildIntroOverlay = () => {
   };
   const mobileLayout = {
     width: 430,
-    height: 720,
-    rows: [150, 250, 350, 450],
-    cols: [145, 225, 305, 385],
-    leftX: 64,
-    gridTopY: 98,
-    gridEndX: 404,
-    bottomY: 630,
-    dimY: 540,
-    captionY: 524,
-    captionX: 265,
-    captionLength: 226,
-    captionMaskX: 150,
-    captionMaskY: 509,
-    captionMaskWidth: 230,
-    captionMaskHeight: 24,
-    r: 25,
-    nodeArm: 14,
+    height: 650,
+    rows: [155, 230, 305, 380],
+    cols: [150, 225, 300, 375],
+    leftX: 68,
+    gridTopY: 112,
+    gridEndX: 398,
+    bottomY: 548,
+    dimY: 468,
+    captionY: 454,
+    captionX: 262,
+    captionLength: 212,
+    captionMaskX: 156,
+    captionMaskY: 440,
+    captionMaskWidth: 214,
+    captionMaskHeight: 22,
+    captionClearPad: 8,
+    r: 22,
+    nodeArm: 12,
     dotGap: 5,
-    dotR: 0.7,
-    extension: 16,
-    tick: 6,
-    primeX1: 8,
-    primeY1: -17,
-    primeX2: 11,
-    primeY2: -7,
+    dotR: 0.62,
+    extension: 14,
+    tick: 5,
+    primeX1: 7,
+    primeY1: -16,
+    primeX2: 10,
+    primeY2: -6,
   };
 
   intro.innerHTML = `
