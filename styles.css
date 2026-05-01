@@ -1586,20 +1586,21 @@ a.project-row:focus-visible .project-render img {
   }
 
   .hara-intro-drawing {
-    width: min(88vw, 390px);
-    max-height: 68vh;
+    top: 47%;
+    width: min(84vw, 370px);
+    max-height: 58vh;
   }
 
   .intro-mark text {
-    font-size: 23px;
+    font-size: 21px;
   }
 
   .intro-greek-mark text {
-    font-size: 26px;
+    font-size: 24px;
   }
 
   .intro-caption {
-    font-size: 12.5px;
+    font-size: 12px;
   }
 
   .intro-final {
