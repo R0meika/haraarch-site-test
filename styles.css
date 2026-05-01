@@ -52,7 +52,6 @@ body.hara-intro-active {
 }
 
 .hara-intro.is-exiting {
-  pointer-events: none;
   animation: intro-fade-out 700ms ease forwards;
 }
 

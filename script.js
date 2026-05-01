@@ -299,7 +299,19 @@ const buildIntroOverlay = () => {
     removeTimer = window.setTimeout(() => intro.remove(), 720);
   };
 
-  intro.addEventListener("pointerdown", closeIntro);
+  const consumeIntroTap = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    closeIntro();
+  };
+
+  const blockIntroClickThrough = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+  };
+
+  intro.addEventListener("pointerdown", consumeIntroTap, { capture: true });
+  intro.addEventListener("click", blockIntroClickThrough, { capture: true });
   window.addEventListener("keydown", closeIntro, { once: true });
   window.addEventListener("wheel", closeIntro, { once: true, passive: true });
   window.addEventListener("touchmove", closeIntro, { once: true, passive: true });
