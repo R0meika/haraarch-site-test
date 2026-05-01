@@ -62,7 +62,7 @@ const buildIntroOverlay = () => {
     const rowDelayStart = 90;
     const columnDelayStart = 900;
     const rowDelayStep = 160;
-    const columnDelayStep = 170;
+    const columnDelayStep = 70;
     const axisSegmentStep = 34;
     const greekCircleDelayBase = 9;
     const russianCircleDelayBase = 13;
@@ -234,10 +234,10 @@ const buildIntroOverlay = () => {
     height: 470,
     rows: [92, 145, 198, 251],
     cols: [121, 197, 273, 349],
-    leftX: 70,
+    leftX: 82,
     gridTopY: 58,
-    gridEndX: 412,
-    bottomY: 342,
+    gridEndX: 388,
+    bottomY: 334,
     dimY: 303,
     captionY: 291,
     captionX: 235,
@@ -252,9 +252,9 @@ const buildIntroOverlay = () => {
     dotR: 0.55,
     extension: 11,
     tick: 4.5,
-    primeX: 9,
+    primeX: 7,
     primeY1: -16,
-    primeY2: -8,
+    primeY2: -9,
   };
 
   intro.innerHTML = `
@@ -281,6 +281,12 @@ const buildIntroOverlay = () => {
 
   let isClosed = false;
   let removeTimer = null;
+  let clickGuardTimer = null;
+
+  const blockClickThrough = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+  };
 
   const closeIntro = () => {
     if (isClosed) {
@@ -294,6 +300,13 @@ const buildIntroOverlay = () => {
     } catch (error) {
       // Private browsing or locked storage should not block the site.
     }
+    window.addEventListener("click", blockClickThrough, true);
+    window.addEventListener("touchend", blockClickThrough, true);
+    window.clearTimeout(clickGuardTimer);
+    clickGuardTimer = window.setTimeout(() => {
+      window.removeEventListener("click", blockClickThrough, true);
+      window.removeEventListener("touchend", blockClickThrough, true);
+    }, 1400);
     intro.classList.add("is-exiting");
     document.body.classList.remove("hara-intro-active");
     removeTimer = window.setTimeout(() => intro.remove(), 720);
@@ -311,7 +324,9 @@ const buildIntroOverlay = () => {
   };
 
   intro.addEventListener("pointerdown", consumeIntroTap, { capture: true });
+  intro.addEventListener("touchstart", consumeIntroTap, { capture: true, passive: false });
   intro.addEventListener("click", blockIntroClickThrough, { capture: true });
+  intro.addEventListener("touchend", blockIntroClickThrough, { capture: true });
   window.addEventListener("keydown", closeIntro, { once: true });
   window.addEventListener("wheel", closeIntro, { once: true, passive: true });
   window.addEventListener("touchmove", closeIntro, { once: true, passive: true });
