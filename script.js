@@ -453,7 +453,11 @@ const buildPracticePanel = () => {
     </div>
     <div>
       <p class="practice-panel-label">Контакт</p>
-      <p>Москва<br><a href="tel:+79281181850">+7 928 118 18 50</a></p>
+      <p>Москва</p>
+      <div class="contact-actions" aria-label="Связаться">
+        <a href="tel:+79281181850">Позвонить</a>
+        <a href="https://wa.me/79281181850">WhatsApp</a>
+      </div>
     </div>
   `;
 
@@ -492,7 +496,7 @@ const yearNode = document.getElementById("current-year");
 const topbar = document.querySelector(".topbar");
 const infoBar = document.querySelector(".info-bar");
 const projectGalleries = document.querySelectorAll(".project-gallery");
-const lightboxGalleries = document.querySelectorAll(".project-gallery, .realization-gallery, .realization-gallery--single");
+const lightboxGalleries = document.querySelectorAll(".project-gallery, .realization-gallery, .realization-gallery--single, .project-docs");
 const draggableGalleries = document.querySelectorAll(".project-gallery, .realization-gallery, .realization-gallery--single");
 
 const syncStickyHeights = () => {
