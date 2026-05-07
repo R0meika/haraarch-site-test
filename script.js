@@ -699,6 +699,9 @@ const createLightbox = () => {
   lightbox.setAttribute("aria-hidden", "true");
   lightbox.innerHTML = `
     <div class="gallery-lightbox-stage">
+      <div class="gallery-lightbox-brand" aria-hidden="true">
+        <span class="brand-word">ХАРА<span class="accent-mark" aria-hidden="true"></span></span>
+      </div>
       <div class="gallery-lightbox-top">
         <button class="gallery-lightbox-button gallery-lightbox-close" type="button" aria-label="Закрыть">x</button>
       </div>
@@ -746,9 +749,10 @@ const renderLightboxItem = () => {
   lightboxCaption.textContent = "";
 };
 
-const openLightbox = (items, index) => {
+const openLightbox = (items, index, gallery) => {
   activeGalleryItems = items;
   activeGalleryIndex = index;
+  lightbox.classList.toggle("is-plan-lightbox", gallery?.classList.contains("project-docs"));
   renderLightboxItem();
   lightbox.classList.add("is-open");
   lightbox.setAttribute("aria-hidden", "false");
@@ -884,13 +888,13 @@ lightboxGalleries.forEach((gallery) => {
         return;
       }
 
-      openLightbox(items, index);
+      openLightbox(items, index, gallery);
     });
 
     item.addEventListener("keydown", (event) => {
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
-        openLightbox(items, index);
+        openLightbox(items, index, gallery);
       }
     });
   });
