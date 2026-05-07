@@ -14,7 +14,7 @@
     href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&display=swap"
     rel="stylesheet"
   >
-  <link rel="stylesheet" href="styles.css?v=20260507-plan-viewer">
+  <link rel="stylesheet" href="styles.css?v=20260508-content-filters">
 </head>
 <body>
   <div class="site-shell">
@@ -26,27 +26,33 @@
       </a>
 
       <div class="topbar-meta">
-        <a class="brand-caption" href="#home">Концепция | Архитектура | Дизайн</a>
+        <nav class="brand-caption brand-caption-nav" aria-label="Разделы практики">
+          <a href="#practice">Концепция</a>
+          <span aria-hidden="true">|</span>
+          <a href="#works" data-project-filter="architecture">Архитектура</a>
+          <span aria-hidden="true">|</span>
+          <a href="#works" data-project-filter="design">Дизайн</a>
+        </nav>
 
         <nav class="nav" aria-label="Основная навигация">
-          <a href="#works">Проекты</a>
-          <a href="#contact">Контакт</a>
+          <a href="#works" data-project-filter="all">Проекты</a>
+          <a href="#contact" class="js-contact-trigger">Контакт</a>
         </nav>
       </div>
     </header>
 
     <main id="home">
-      <section class="works section">
+      <section class="works section" id="works">
         <div class="section-heading reveal">
           <p class="eyebrow">Проекты</p>
           <h2>Структура портфолио.</h2>
         </div>
 
         <div class="project-list">
-          <article class="project-row reveal">
+          <article class="project-row reveal" data-category="design">
             <a class="project-row-hit" href="projects/kushchevka.html" aria-label="Открыть проект Частный жилой дом"></a>
             <span class="project-number">01</span>
-            <h3 id="works">Частный жилой дом</h3>
+            <h3>Частный жилой дом</h3>
             <div class="project-copy">
               <ul class="project-details" aria-label="Информация о проекте">
                 <li><span>Тип</span> Частный жилой дом</li>
@@ -54,7 +60,7 @@
                 <li><span>Локация</span> Ростов-на-Дону</li>
                 <li><span>Статус</span> В реализации</li>
               </ul>
-              <p class="project-note">Камерный интерьер с плотной графичной палитрой: темное дерево, серый камень, скрытый свет и отдельные контрастные акценты. Пространство держится на крупных спокойных плоскостях, поэтому темная гамма не перегружает комнаты. Акценты появляются дозированно через камень, локальную подсветку и предметные детали.</p>
+              <p class="project-note">Темный интерьер без декоративной перегрузки: крупные плоскости, скрытый свет, дерево и серый камень.</p>
               <div class="project-docs" aria-label="Планировки проекта">
                 <figure class="project-plan-card">
                   <img src="assets/plans/kushchevka-plan-01.webp" alt="Частный жилой дом — планировка">
@@ -70,7 +76,7 @@
             </div>
           </article>
 
-          <article class="project-row reveal">
+          <article class="project-row reveal" data-category="design">
             <a class="project-row-hit" href="projects/voronezh.html" aria-label="Открыть проект Частный жилой дом"></a>
             <span class="project-number">02</span>
             <h3>Частный жилой дом</h3>
@@ -81,7 +87,7 @@
                 <li><span>Локация</span> Воронеж</li>
                 <li><span>Статус</span> В реализации</li>
               </ul>
-              <p class="project-note">Теплое дерево, спокойные светлые плоскости и мягкий рассеянный свет без декоративной перегрузки. Общая зона собрана вокруг кухни, столовой и гостиной, а приватные комнаты продолжают ту же спокойную логику. Материалы работают точечно: дерево, камень, текстиль и приглушенный темный металл.</p>
+              <p class="project-note">Теплый интерьер с прямой композицией: дерево, светлые стены, мягкий свет и спокойная общая зона.</p>
               <div class="project-docs" aria-label="Планировки проекта">
                 <figure class="project-plan-card">
                   <img src="assets/plans/voronezh-plan-01.webp" alt="Частный жилой дом — планировка">
@@ -97,7 +103,7 @@
             </div>
           </article>
 
-          <article class="project-row reveal">
+          <article class="project-row reveal" data-category="design">
             <a class="project-row-hit" href="projects/sydney-city.html" aria-label="Открыть проект Квартира ЖК Сидней Сити"></a>
             <span class="project-number">03</span>
             <h3>Квартира ЖК Сидней Сити</h3>
@@ -108,7 +114,7 @@
                 <li><span>Локация</span> Москва</li>
                 <li><span>Статус</span> В разработке</li>
               </ul>
-              <p class="project-note">Цельное open-space пространство с чистыми плоскостями, встроенным хранением и спокойной градацией теплых серых оттенков. Кухня, столовая и гостиная читаются как несколько крупных объемов без визуального шума. Линейный свет, скрытые стыки и мягкий текстиль делают квартиру строгой, но не холодной.</p>
+              <p class="project-note">Небольшая квартира собрана крупными встроенными объемами: хранение, кухня и гостиная работают без визуального шума.</p>
               <div class="project-docs" aria-label="Планировки проекта">
                 <figure class="project-plan-card">
                   <img src="assets/plans/sydney-city-plan-01.webp" alt="Квартира ЖК Сидней Сити — планировка">
@@ -124,7 +130,7 @@
             </div>
           </article>
 
-          <article class="project-row reveal">
+          <article class="project-row reveal" data-category="design">
             <a class="project-row-hit" href="projects/dacha-shale.html" aria-label="Открыть проект Загородный дом"></a>
             <span class="project-number">04</span>
             <h3>Загородный дом</h3>
@@ -135,7 +141,7 @@
                 <li><span>Локация</span> Истра</li>
                 <li><span>Статус</span> В разработке</li>
               </ul>
-              <p class="project-note">Современная подача шале: выразительная деревянная конструкция, светлые плоскости, низкая мебель и спокойная обеденная группа. Грубая фактура дерева остается основой характера, но интерьер становится легче за счет простых плоскостей и мягких предметов. В проекте важен баланс теплого загородного образа и современной чистоты.</p>
+              <p class="project-note">Загородный интерьер держится на дереве и простых плоскостях: современная версия шале без лишней декоративности.</p>
               <div class="project-docs" aria-label="Планировки проекта">
                 <figure class="project-plan-card">
                   <img src="assets/plans/dacha-shale-plan-01.webp" alt="Загородный дом — планировка">
@@ -151,10 +157,10 @@
             </div>
           </article>
 
-          <article class="project-row reveal">
-            <a class="project-row-hit" href="projects/dom.html" aria-label="Открыть проект Эскизный проект дома"></a>
+          <article class="project-row reveal" data-category="architecture">
+            <a class="project-row-hit" href="projects/dom.html" aria-label="Открыть проект Частный жилой дом"></a>
             <span class="project-number">05</span>
-            <h3>Эскизный проект дома</h3>
+            <h3>Частный жилой дом</h3>
             <div class="project-copy">
               <ul class="project-details" aria-label="Информация о проекте">
                 <li><span>Тип</span> Частный дом</li>
@@ -162,17 +168,17 @@
                 <li><span>Локация</span> Московская область</li>
                 <li><span>Статус</span> В реализации</li>
               </ul>
-              <p class="project-note">Компактный двухэтажный объем со сдержанной пластикой фасада, крупными проемами и ясной архитектурной логикой. Светлая верхняя часть противопоставлена темному первому уровню, поэтому дом выглядит собранным и устойчивым. Ограждение, входная группа и ритм проемов работают как продолжение общей композиции.</p>
+              <p class="project-note">Компактный частный дом с ясным объемом: светлый верх, темный первый уровень и крупные проемы.</p>
             </div>
             <div class="project-render" aria-hidden="true">
               <img src="assets/previews/home-dom.webp" alt="" loading="lazy" decoding="async">
               <div class="project-render-label">
-                <span class="project-render-name">Эскизный проект дома</span>
+                <span class="project-render-name">Частный жилой дом</span>
               </div>
             </div>
           </article>
 
-          <article class="project-row reveal">
+          <article class="project-row reveal" data-category="architecture">
             <a class="project-row-hit" href="projects/almaty-reconstruction.html" aria-label="Открыть проект Реконструкция кафе"></a>
             <span class="project-number">06</span>
             <h3>Реконструкция кафе</h3>
@@ -183,7 +189,7 @@
                 <li><span>Локация</span> Алматы</li>
                 <li><span>Статус</span> В разработке</li>
               </ul>
-              <p class="project-note">Реконструкция углового здания с более строгой композицией: светлая штукатурка, черный металл, витражи и периметральная терраса. Основной акцент сделан на первом этаже, навесах, часах и ритме проемов. Фасад становится чище и выразительнее без перегрузки декоративными деталями.</p>
+              <p class="project-note">Реконструкция собирает фасад в более строгий городской образ: светлая штукатурка, черный металл, витражи и терраса.</p>
             </div>
             <div class="project-render" aria-hidden="true">
               <img src="assets/previews/home-almaty-reconstruction.webp?v=20260507-cafe-order" alt="" loading="lazy" decoding="async">
@@ -197,20 +203,20 @@
 
     </main>
 
-    <footer class="footer" id="contact">
-      <p class="footer-note">
-        Студия проектирует частные дома, жилые интерьеры и камерные
-        общественные пространства. В основе - пропорция, ясная структура,
-        свет и сдержанная материальность.
-      </p>
+    <footer class="footer" id="practice">
+      <div class="footer-copy">
+        <p class="footer-brand"><span class="brand-word">ХАРА<span class="accent-mark" aria-hidden="true"></span></span> | архитектурная и дизайн-практика</p>
+        <p class="footer-note">Архитектурная и дизайн-практика для частных домов, жилых интерьеров и камерных общественных пространств.</p>
+      </div>
       <div class="contact-actions" aria-label="Связаться">
         <a href="tel:+79281181850">Позвонить</a>
         <a href="https://wa.me/79281181850">WhatsApp</a>
+        <a href="https://t.me/sergey_danilovv">Telegram</a>
       </div>
     </footer>
   </div>
 
-  <script src="script.js?v=20260507-plan-viewer"></script>
+  <script src="script.js?v=20260508-content-filters"></script>
 </body>
 </html>
 

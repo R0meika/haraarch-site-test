@@ -25,7 +25,7 @@ const projectNavItems = [
   },
   {
     href: "dom.html",
-    title: "Эскизный проект дома",
+    title: "Частный жилой дом",
     meta: "170 м² | Московская область",
     status: "В реализации",
   },
@@ -168,7 +168,7 @@ const buildIntroOverlay = () => {
       .join("");
 
     return `
-      <svg class="hara-intro-drawing" viewBox="0 0 ${layout.width} ${layout.height}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="ХАРА">
+      <svg class="hara-intro-drawing" viewBox="0 0 ${layout.width} ${layout.height}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="ХАРА́">
         <g class="intro-composition">
           <g class="intro-grid">
             ${horizontalAxes}
@@ -200,7 +200,7 @@ const buildIntroOverlay = () => {
   const intro = document.createElement("div");
   intro.className = `hara-intro${reducedMotion ? " is-reduced" : ""}`;
   intro.setAttribute("role", "dialog");
-  intro.setAttribute("aria-label", "Вход на сайт ХАРА");
+  intro.setAttribute("aria-label", "Вход на сайт ХАРА́");
   const isCompactIntro = window.matchMedia("(max-width: 760px)").matches;
   const desktopLayout = {
     width: 1000,
@@ -366,11 +366,6 @@ const buildProjectIndex = () => {
           .join("")}
       </nav>
     </div>
-    <nav class="project-index-block project-index-menu" aria-label="Разделы бюро">
-      <a href="../index.html#works">Все проекты</a>
-      <a href="#practice">Практика</a>
-      <a href="../index.html#contact">Контакт</a>
-    </nav>
   `;
 
   shell.insertBefore(projectIndex, projectMain);
@@ -423,51 +418,126 @@ const buildMobileServiceNav = () => {
   serviceNav.className = "mobile-service-nav";
   serviceNav.setAttribute("aria-label", "Разделы практики");
   serviceNav.innerHTML = `
-    <span>Архитектура</span>
-    <span>Дизайн</span>
+    <a href="#works" data-project-filter="architecture">Архитектура</a>
+    <a href="#works" data-project-filter="design">Дизайн</a>
   `;
 
   topbar.insertAdjacentElement("afterend", serviceNav);
 };
 
-const buildPracticePanel = () => {
-  const projectMain = document.querySelector(".project-page-main");
-  const footer = document.querySelector(".footer");
+buildIntroOverlay();
+buildMobileServiceNav();
+buildProjectIndex();
 
-  if (!projectMain || !footer || document.querySelector(".practice-panel")) {
+const projectRows = document.querySelectorAll(".project-row[data-category]");
+const projectFilterLinks = document.querySelectorAll("[data-project-filter]");
+
+const getFilteredUrl = (filter) => {
+  const normalizedFilter = filter === "architecture" || filter === "design" ? filter : "all";
+  const base = `${window.location.pathname}`;
+
+  if (normalizedFilter === "all") {
+    return `${base}#works`;
+  }
+
+  return `${base}?filter=${normalizedFilter}#works`;
+};
+
+const applyProjectFilter = (filter, options = {}) => {
+  if (!projectRows.length) {
     return;
   }
 
-  const panel = document.createElement("section");
-  panel.className = "practice-panel";
-  panel.id = "practice";
-  panel.setAttribute("aria-label", "Информация о практике");
-  panel.innerHTML = `
-    <div>
-      <p class="practice-panel-label">Практика</p>
-      <p>ХАРА работает с частными домами, жилыми интерьерами и камерными общественными пространствами.</p>
-    </div>
-    <div>
-      <p class="practice-panel-label">Подход</p>
-      <p>В основе проекта - пропорция, ясная структура, свет и сдержанная материальность.</p>
-    </div>
-    <div>
-      <p class="practice-panel-label">Контакт</p>
-      <p>Москва</p>
-      <div class="contact-actions" aria-label="Связаться">
-        <a href="tel:+79281181850">Позвонить</a>
-        <a href="https://wa.me/79281181850">WhatsApp</a>
+  const normalizedFilter = filter === "architecture" || filter === "design" ? filter : "all";
+
+  projectRows.forEach((row) => {
+    row.classList.toggle("is-filtered-out", normalizedFilter !== "all" && row.dataset.category !== normalizedFilter);
+  });
+
+  projectFilterLinks.forEach((link) => {
+    link.classList.toggle("is-active", link.dataset.projectFilter === normalizedFilter);
+  });
+
+  if (options.updateUrl && window.history?.pushState) {
+    window.history.pushState({ projectFilter: normalizedFilter }, "", getFilteredUrl(normalizedFilter));
+  }
+};
+
+if (projectRows.length) {
+  const initialFilter = new URLSearchParams(window.location.search).get("filter");
+  applyProjectFilter(initialFilter);
+
+  projectFilterLinks.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      applyProjectFilter(link.dataset.projectFilter, { updateUrl: true });
+      document.getElementById("works")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+
+  window.addEventListener("popstate", () => {
+    applyProjectFilter(new URLSearchParams(window.location.search).get("filter"));
+  });
+}
+
+const createContactOverlay = () => {
+  const overlay = document.createElement("div");
+  overlay.className = "contact-overlay";
+  overlay.setAttribute("aria-hidden", "true");
+  overlay.innerHTML = `
+    <div class="contact-overlay-stage" role="dialog" aria-modal="true" aria-label="Контакт">
+      <div class="contact-overlay-brand" aria-hidden="true">
+        <span class="brand-word">ХАРА<span class="accent-mark" aria-hidden="true"></span></span>
+      </div>
+      <button class="contact-overlay-close" type="button" aria-label="Закрыть">x</button>
+      <div class="contact-overlay-content">
+        <p class="contact-overlay-title">Контакт</p>
+        <div class="contact-actions" aria-label="Связаться">
+          <a href="tel:+79281181850">Позвонить</a>
+          <a href="https://wa.me/79281181850">WhatsApp</a>
+          <a href="https://t.me/sergey_danilovv">Telegram</a>
+        </div>
       </div>
     </div>
   `;
 
-  footer.parentNode.insertBefore(panel, footer);
+  document.body.append(overlay);
+  return overlay;
 };
 
-buildIntroOverlay();
-buildMobileServiceNav();
-buildProjectIndex();
-buildPracticePanel();
+const contactOverlay = createContactOverlay();
+const contactOverlayClose = contactOverlay.querySelector(".contact-overlay-close");
+const contactTriggers = document.querySelectorAll(".js-contact-trigger");
+
+const openContactOverlay = () => {
+  contactOverlay.classList.add("is-open");
+  contactOverlay.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+};
+
+const closeContactOverlay = () => {
+  contactOverlay.classList.remove("is-open");
+  contactOverlay.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+};
+
+contactTriggers.forEach((trigger) => {
+  trigger.addEventListener("click", (event) => {
+    event.preventDefault();
+    openContactOverlay();
+  });
+});
+
+contactOverlayClose.addEventListener("click", closeContactOverlay);
+contactOverlay.addEventListener("click", (event) => {
+  if (event.target === contactOverlay) {
+    closeContactOverlay();
+  }
+});
+
+if (window.location.hash === "#contact") {
+  window.requestAnimationFrame(openContactOverlay);
+}
 
 const revealItems = document.querySelectorAll(".reveal");
 
@@ -492,7 +562,6 @@ if ("IntersectionObserver" in window) {
   revealItems.forEach((item) => item.classList.add("is-visible"));
 }
 
-const yearNode = document.getElementById("current-year");
 const topbar = document.querySelector(".topbar");
 const infoBar = document.querySelector(".info-bar");
 const projectGalleries = document.querySelectorAll(".project-gallery");
@@ -842,10 +911,6 @@ const finishLightboxTouchSwipe = (event) => {
   }
 };
 
-if (yearNode) {
-  yearNode.textContent = new Date().getFullYear();
-}
-
 syncStickyHeights();
 syncTopbarState();
 classifyGalleryItems();
@@ -925,6 +990,14 @@ lightbox.addEventListener("click", (event) => {
 });
 
 window.addEventListener("keydown", (event) => {
+  if (contactOverlay.classList.contains("is-open")) {
+    if (event.key === "Escape") {
+      closeContactOverlay();
+    }
+
+    return;
+  }
+
   if (!lightbox.classList.contains("is-open")) {
     return;
   }

@@ -14,7 +14,7 @@
     href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&display=swap"
     rel="stylesheet"
   >
-  <link rel="stylesheet" href="../styles.css?v=20260507-plan-viewer">
+  <link rel="stylesheet" href="../styles.css?v=20260508-content-filters">
 </head>
 <body>
   <div class="site-shell">
@@ -26,11 +26,17 @@
       </a>
 
       <div class="topbar-meta">
-        <a class="brand-caption" href="../index.html#home">Концепция | Архитектура | Дизайн</a>
+        <nav class="brand-caption brand-caption-nav" aria-label="Разделы практики">
+          <a href="../index.html#practice">Концепция</a>
+          <span aria-hidden="true">|</span>
+          <a href="../index.html?filter=architecture#works">Архитектура</a>
+          <span aria-hidden="true">|</span>
+          <a href="../index.html?filter=design#works">Дизайн</a>
+        </nav>
 
         <nav class="nav" aria-label="Основная навигация">
           <a href="../index.html#works">Проекты</a>
-          <a href="../index.html#contact">Контакт</a>
+          <a href="../index.html#contact" class="js-contact-trigger">Контакт</a>
         </nav>
       </div>
     </header>
@@ -49,16 +55,7 @@
 
       <section class="project-page-grid section">
         <div class="project-page-summary reveal">
-          <p>
-            Проект соединяет загородную деревянную конструкцию с более спокойной современной подачей.
-            Балки, стойки и декоративные решетки оставлены как основа характера, а светлые плоскости,
-            низкая мебель и крупная плитка убирают ощущение перегруженного шале.
-          </p>
-          <p>
-            Интерьер держится на контрасте грубой фактуры дерева и мягких предметов: диванов, текстиля,
-            округлого света и спокойной обеденной группы. За счет этого пространство выглядит теплым,
-            но не декоративным.
-          </p>
+          <p>Загородный интерьер держится на дереве и простых плоскостях: современная версия шале без лишней декоративности.</p>
         </div>
 
         <div class="project-docs reveal" aria-label="Планировки проекта">
@@ -116,12 +113,19 @@
       </section>
     </main>
 
-    <footer class="footer">
-      <p><span class="brand-word">ХАРА<span class="accent-mark" aria-hidden="true"></span></span> | архитектурная и дизайн-практика</p>
-      <p><span id="current-year"></span> | проект</p>
+    <footer class="footer" id="practice">
+      <div class="footer-copy">
+        <p class="footer-brand"><span class="brand-word">ХАРА<span class="accent-mark" aria-hidden="true"></span></span> | архитектурная и дизайн-практика</p>
+        <p class="footer-note">Архитектурная и дизайн-практика для частных домов, жилых интерьеров и камерных общественных пространств.</p>
+      </div>
+      <div class="contact-actions" aria-label="Связаться">
+        <a href="tel:+79281181850">Позвонить</a>
+        <a href="https://wa.me/79281181850">WhatsApp</a>
+        <a href="https://t.me/sergey_danilovv">Telegram</a>
+      </div>
     </footer>
   </div>
 
-  <script src="../script.js?v=20260507-plan-viewer"></script>
+  <script src="../script.js?v=20260508-content-filters"></script>
 </body>
 </html>

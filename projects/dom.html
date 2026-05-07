@@ -7,14 +7,14 @@
     name="description"
     content="Дом — частный дом. Лаконичный двухэтажный объем с ясной геометрией и сдержанной материальностью."
   >
-  <title>Эскизный проект дома — ХАРА́</title>
+  <title>Частный жилой дом — ХАРА́</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&display=swap"
     rel="stylesheet"
   >
-  <link rel="stylesheet" href="../styles.css?v=20260507-plan-viewer">
+  <link rel="stylesheet" href="../styles.css?v=20260508-content-filters">
 </head>
 <body>
   <div class="site-shell">
@@ -26,11 +26,17 @@
       </a>
 
       <div class="topbar-meta">
-        <a class="brand-caption" href="../index.html#home">Концепция | Архитектура | Дизайн</a>
+        <nav class="brand-caption brand-caption-nav" aria-label="Разделы практики">
+          <a href="../index.html#practice">Концепция</a>
+          <span aria-hidden="true">|</span>
+          <a href="../index.html?filter=architecture#works">Архитектура</a>
+          <span aria-hidden="true">|</span>
+          <a href="../index.html?filter=design#works">Дизайн</a>
+        </nav>
 
         <nav class="nav" aria-label="Основная навигация">
           <a href="../index.html#works">Проекты</a>
-          <a href="../index.html#contact">Контакт</a>
+          <a href="../index.html#contact" class="js-contact-trigger">Контакт</a>
         </nav>
       </div>
     </header>
@@ -38,7 +44,7 @@
     <main class="project-page-main">
       <section class="project-page-hero section">
         <p class="eyebrow">Проект</p>
-        <h1 class="project-page-title reveal">Эскизный проект дома</h1>
+        <h1 class="project-page-title reveal">Частный жилой дом</h1>
 
         <div class="project-page-meta reveal">
           <p>170 м²</p>
@@ -49,19 +55,11 @@
 
       <section class="project-page-grid section">
         <div class="project-page-summary reveal">
-          <p>
-            Проект читается как компактный частный дом с ясным двухэтажным объемом и сдержанной пластикой фасада.
-            Светлая верхняя часть противопоставлена темному ритмичному поясу первого уровня, за счет чего дом
-            выглядит собранным и устойчивым.
-          </p>
-          <p>
-            Визуальный характер строится на крупном масштабе проемов, простых пропорциях и минимуме декоративных
-            жестов. Даже ограждение и входная группа работают как продолжение общей архитектурной логики.
-          </p>
+          <p>Компактный частный дом с ясным объемом: светлый верх, темный первый уровень и крупные проемы.</p>
         </div>
 
         <div class="project-facts reveal">
-          <p><span>Тип</span> Эскизный проект дома</p>
+          <p><span>Тип</span> Частный дом</p>
           <p><span>Площадь</span> 170 м²</p>
           <p><span>Локация</span> Московская область, Россия</p>
           <p><span>Статус</span> В реализации</p>
@@ -101,12 +99,19 @@
       </section>
     </main>
 
-    <footer class="footer">
-      <p><span class="brand-word">ХАРА<span class="accent-mark" aria-hidden="true"></span></span> | архитектурная и дизайн-практика</p>
-      <p><span id="current-year"></span> | проект</p>
+    <footer class="footer" id="practice">
+      <div class="footer-copy">
+        <p class="footer-brand"><span class="brand-word">ХАРА<span class="accent-mark" aria-hidden="true"></span></span> | архитектурная и дизайн-практика</p>
+        <p class="footer-note">Архитектурная и дизайн-практика для частных домов, жилых интерьеров и камерных общественных пространств.</p>
+      </div>
+      <div class="contact-actions" aria-label="Связаться">
+        <a href="tel:+79281181850">Позвонить</a>
+        <a href="https://wa.me/79281181850">WhatsApp</a>
+        <a href="https://t.me/sergey_danilovv">Telegram</a>
+      </div>
     </footer>
   </div>
 
-  <script src="../script.js?v=20260507-plan-viewer"></script>
+  <script src="../script.js?v=20260508-content-filters"></script>
 </body>
 </html>
