@@ -451,8 +451,13 @@ const applyProjectFilter = (filter, options = {}) => {
   const normalizedFilter = filter === "architecture" || filter === "design" ? filter : "all";
 
   projectRows.forEach((row) => {
+    row.classList.remove("is-first-visible");
     row.classList.toggle("is-filtered-out", normalizedFilter !== "all" && row.dataset.category !== normalizedFilter);
   });
+
+  const firstVisibleRow = Array.from(projectRows).find((row) => !row.classList.contains("is-filtered-out"));
+  firstVisibleRow?.classList.add("is-first-visible");
+  document.body.classList.toggle("is-project-filtered", normalizedFilter !== "all");
 
   projectFilterLinks.forEach((link) => {
     link.classList.toggle("is-active", link.dataset.projectFilter === normalizedFilter);
@@ -475,6 +480,17 @@ if (projectRows.length) {
     });
   });
 
+  document.querySelector(".topbar .brand")?.addEventListener("click", (event) => {
+    event.preventDefault();
+    applyProjectFilter("all");
+
+    if (window.history?.pushState) {
+      window.history.pushState({ projectFilter: "all" }, "", `${window.location.pathname}#home`);
+    }
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
   window.addEventListener("popstate", () => {
     applyProjectFilter(new URLSearchParams(window.location.search).get("filter"));
   });
@@ -485,13 +501,13 @@ const createContactOverlay = () => {
   overlay.className = "contact-overlay";
   overlay.setAttribute("aria-hidden", "true");
   overlay.innerHTML = `
-    <div class="contact-overlay-stage" role="dialog" aria-modal="true" aria-label="Контакт">
+    <div class="contact-overlay-stage" role="dialog" aria-modal="true" aria-label="Контакты">
       <div class="contact-overlay-brand" aria-hidden="true">
         <span class="brand-word">ХАРА<span class="accent-mark" aria-hidden="true"></span></span>
       </div>
       <button class="contact-overlay-close" type="button" aria-label="Закрыть">x</button>
       <div class="contact-overlay-content">
-        <p class="contact-overlay-title">Контакт</p>
+        <p class="contact-overlay-title">Контакты</p>
         <div class="contact-actions" aria-label="Связаться">
           <a href="tel:+79281181850">Позвонить</a>
           <a href="https://wa.me/79281181850">WhatsApp</a>
@@ -507,6 +523,20 @@ const createContactOverlay = () => {
 
 const contactOverlay = createContactOverlay();
 const contactOverlayClose = contactOverlay.querySelector(".contact-overlay-close");
+const buildMobileContactDock = () => {
+  if (document.querySelector(".mobile-contact-dock")) {
+    return;
+  }
+
+  const dock = document.createElement("button");
+  dock.className = "mobile-contact-dock js-contact-trigger";
+  dock.type = "button";
+  dock.textContent = "Контакты";
+  dock.setAttribute("aria-label", "Открыть контакты");
+  document.body.append(dock);
+};
+
+buildMobileContactDock();
 const contactTriggers = document.querySelectorAll(".js-contact-trigger");
 
 const openContactOverlay = () => {
