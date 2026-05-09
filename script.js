@@ -740,7 +740,8 @@ const syncTopbarState = () => {
   }
 
   const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
-  const rawProgress = clamp(window.scrollY / maxScroll, 0, 1);
+  const progressDistance = Math.min(maxScroll, Math.max(window.innerHeight * 1.8, 1));
+  const rawProgress = clamp(window.scrollY / progressDistance, 0, 1);
   const progress = easeScrollProgress(rawProgress);
   const viewportWidth = Math.min(window.innerWidth || 375, document.documentElement.clientWidth || 375);
   const startSize = clamp(viewportWidth * 0.082, 30, 36);
@@ -754,7 +755,7 @@ const syncTopbarState = () => {
   topbar.style.setProperty("--topbar-padding-top", `${lerp(12, 6, progress).toFixed(2)}px`);
   topbar.style.setProperty("--topbar-padding-bottom", `${lerp(10, 7, progress).toFixed(2)}px`);
   topbar.style.setProperty("--topbar-gap", `${lerp(5, 0, progress).toFixed(2)}px`);
-  topbar.style.setProperty("--topbar-bg-alpha", lerp(0.62, 0.86, progress).toFixed(3));
+  topbar.style.setProperty("--topbar-bg-alpha", lerp(0.82, 0.94, progress).toFixed(3));
   queueStickyHeights();
 };
 
