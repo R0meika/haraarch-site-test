@@ -43,7 +43,7 @@ const buildIntroOverlay = () => {
   const forceIntro = params.get("intro") === "1";
   const skipIntro = params.get("intro") === "0";
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const storageKey = "haraIntroSeen";
+  const storageKey = "haraIntroSeenFinalOnly";
   let introSeen = false;
 
   try {
@@ -198,7 +198,7 @@ const buildIntroOverlay = () => {
   };
 
   const intro = document.createElement("div");
-  intro.className = `hara-intro${reducedMotion ? " is-reduced" : ""}`;
+  intro.className = `hara-intro hara-intro--final-only${reducedMotion ? " is-reduced" : ""}`;
   intro.setAttribute("role", "dialog");
   intro.setAttribute("aria-label", "Вход на сайт ХАРА́");
   const isCompactIntro = window.matchMedia("(max-width: 760px)").matches;
@@ -258,7 +258,6 @@ const buildIntroOverlay = () => {
   };
 
   intro.innerHTML = `
-    ${createIntroSvg(isCompactIntro ? mobileLayout : desktopLayout)}
     <div class="intro-final" aria-hidden="true">
       <div class="intro-final-lockup">
         <p class="intro-final-brand" aria-label="ХАРА́">
@@ -432,6 +431,23 @@ buildProjectIndex();
 const projectRows = document.querySelectorAll(".project-row[data-category]");
 const projectFilterLinks = document.querySelectorAll("[data-project-filter]");
 
+const scrollToWorks = (behavior = "smooth") => {
+  const works = document.getElementById("works");
+
+  if (!works) {
+    return;
+  }
+
+  const visibleProject = document.querySelector(".project-row:not(.is-filtered-out)");
+  const target = visibleProject || works;
+  const topbarHeight = document.querySelector(".topbar")?.getBoundingClientRect().height || 0;
+  const serviceNavHeight = document.querySelector(".mobile-service-nav")?.getBoundingClientRect().height || 0;
+  const offset = topbarHeight + serviceNavHeight + 22;
+  const top = target.getBoundingClientRect().top + window.scrollY - offset;
+
+  window.scrollTo({ top: Math.max(0, top), behavior });
+};
+
 const getFilteredUrl = (filter) => {
   const normalizedFilter = filter === "architecture" || filter === "design" ? filter : "all";
   const base = `${window.location.pathname}`;
@@ -476,7 +492,7 @@ if (projectRows.length) {
     link.addEventListener("click", (event) => {
       event.preventDefault();
       applyProjectFilter(link.dataset.projectFilter, { updateUrl: true });
-      document.getElementById("works")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      scrollToWorks();
     });
   });
 
@@ -498,16 +514,15 @@ if (projectRows.length) {
 
 const createContactOverlay = () => {
   const overlay = document.createElement("div");
-  overlay.className = "contact-overlay";
+  overlay.className = "clean-overlay contact-overlay";
   overlay.setAttribute("aria-hidden", "true");
   overlay.innerHTML = `
     <div class="contact-overlay-stage" role="dialog" aria-modal="true" aria-label="Контакты">
-      <div class="contact-overlay-brand" aria-hidden="true">
+      <div class="contact-overlay-brand clean-overlay-brand" aria-hidden="true">
         <span class="brand-word">ХАРА<span class="accent-mark" aria-hidden="true"></span></span>
       </div>
-      <button class="contact-overlay-close" type="button" aria-label="Закрыть">x</button>
+      <button class="contact-overlay-close clean-overlay-close" type="button" aria-label="Вернуться">Вернуться</button>
       <div class="contact-overlay-content">
-        <p class="contact-overlay-title">Контакты</p>
         <div class="contact-actions" aria-label="Связаться">
           <a href="tel:+79281181850">Позвонить</a>
           <a href="https://wa.me/79281181850">WhatsApp</a>
@@ -521,8 +536,31 @@ const createContactOverlay = () => {
   return overlay;
 };
 
+const createConceptOverlay = () => {
+  const overlay = document.createElement("div");
+  overlay.className = "clean-overlay concept-overlay";
+  overlay.setAttribute("aria-hidden", "true");
+  overlay.innerHTML = `
+    <div class="concept-overlay-stage" role="dialog" aria-modal="true" aria-label="Концепция">
+      <div class="clean-overlay-brand" aria-hidden="true">
+        <span class="brand-word">ХАРА<span class="accent-mark" aria-hidden="true"></span></span>
+      </div>
+      <button class="clean-overlay-close concept-overlay-close" type="button" aria-label="Вернуться">Вернуться</button>
+      <div class="concept-overlay-content">
+        <p>ХАРА́ | Архитектурная и дизайн-практика для частных домов, жилых интерьеров и камерных общественных пространств.</p>
+        <p>В основе проекта - пропорция, ясная структура, свет и сдержанная материальность.</p>
+      </div>
+    </div>
+  `;
+
+  document.body.append(overlay);
+  return overlay;
+};
+
 const contactOverlay = createContactOverlay();
 const contactOverlayClose = contactOverlay.querySelector(".contact-overlay-close");
+const conceptOverlay = createConceptOverlay();
+const conceptOverlayClose = conceptOverlay.querySelector(".concept-overlay-close");
 const buildMobileContactDock = () => {
   if (document.querySelector(".mobile-contact-dock")) {
     return;
@@ -538,6 +576,7 @@ const buildMobileContactDock = () => {
 
 buildMobileContactDock();
 const contactTriggers = document.querySelectorAll(".js-contact-trigger");
+const conceptTriggers = document.querySelectorAll('a[href="#practice"], a[href$="#practice"]');
 
 const openContactOverlay = () => {
   contactOverlay.classList.add("is-open");
@@ -551,6 +590,18 @@ const closeContactOverlay = () => {
   document.body.style.overflow = "";
 };
 
+const openConceptOverlay = () => {
+  conceptOverlay.classList.add("is-open");
+  conceptOverlay.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+};
+
+const closeConceptOverlay = () => {
+  conceptOverlay.classList.remove("is-open");
+  conceptOverlay.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+};
+
 contactTriggers.forEach((trigger) => {
   trigger.addEventListener("click", (event) => {
     event.preventDefault();
@@ -558,15 +609,51 @@ contactTriggers.forEach((trigger) => {
   });
 });
 
+conceptTriggers.forEach((trigger) => {
+  trigger.addEventListener("click", (event) => {
+    event.preventDefault();
+    openConceptOverlay();
+  });
+});
+
+document.querySelectorAll('a[href^="tel:"]').forEach((trigger) => {
+  trigger.addEventListener("click", (event) => {
+    event.preventDefault();
+    trigger.textContent = "8 928 118 18 50";
+    trigger.classList.add("is-phone-visible");
+  });
+});
+
 contactOverlayClose.addEventListener("click", closeContactOverlay);
 contactOverlay.addEventListener("click", (event) => {
-  if (event.target === contactOverlay) {
+  if (!event.target.closest("a, button")) {
     closeContactOverlay();
+  }
+});
+conceptOverlayClose.addEventListener("click", closeConceptOverlay);
+conceptOverlay.addEventListener("click", (event) => {
+  if (!event.target.closest("a, button")) {
+    closeConceptOverlay();
+  }
+});
+window.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    if (contactOverlay.classList.contains("is-open")) {
+      closeContactOverlay();
+    }
+
+    if (conceptOverlay.classList.contains("is-open")) {
+      closeConceptOverlay();
+    }
   }
 });
 
 if (window.location.hash === "#contact") {
-  window.requestAnimationFrame(openContactOverlay);
+  openContactOverlay();
+}
+
+if (window.location.hash === "#practice") {
+  openConceptOverlay();
 }
 
 const revealItems = document.querySelectorAll(".reveal");
