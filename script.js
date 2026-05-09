@@ -1,36 +1,42 @@
 const projectNavItems = [
   {
     href: "kushchevka.html",
+    number: "0.1",
     title: "Частный жилой дом",
     meta: "350 м² | Ростов-на-Дону",
     status: "В реализации",
   },
   {
     href: "voronezh.html",
+    number: "0.2",
     title: "Частный жилой дом",
     meta: "150 м² | Воронеж",
     status: "В реализации",
   },
   {
     href: "sydney-city.html",
+    number: "0.3",
     title: "Квартира ЖК Сидней Сити",
     meta: "65 м² | Москва",
     status: "В разработке",
   },
   {
     href: "dacha-shale.html",
+    number: "0.4",
     title: "Загородный дом",
     meta: "200 м² | Истра",
     status: "В разработке",
   },
   {
     href: "dom.html",
+    number: "0.5",
     title: "Частный жилой дом",
     meta: "170 м² | Московская область",
     status: "В реализации",
   },
   {
     href: "almaty-reconstruction.html",
+    number: "0.6",
     title: "Реконструкция кафе",
     meta: "140 м² | Алматы",
     status: "В разработке",
@@ -355,6 +361,7 @@ const buildProjectIndex = () => {
             const isCurrent = item.href === currentFile;
             return `
               <a class="project-index-link${isCurrent ? " is-current" : ""}" href="${item.href}"${isCurrent ? ' aria-current="page"' : ""}>
+                <span class="project-index-number">${item.number}</span>
                 <span>
                   ${item.title}
                   <small>${item.meta} | ${item.status}</small>
@@ -392,7 +399,7 @@ const buildProjectIndex = () => {
         .map(
           (item) => `
             <a class="project-switcher-link" href="${item.href}">
-              <span>${item.title}</span>
+              <span><span class="project-switcher-number">${item.number}</span>${item.title}</span>
               <small>${item.meta} | ${item.status}</small>
             </a>
           `
