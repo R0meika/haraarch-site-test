@@ -740,17 +740,17 @@ const syncTopbarState = () => {
   }
 
   const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
-  const progressDistance = Math.min(maxScroll, Math.max(window.innerHeight * 1.8, 1));
+  const progressDistance = Math.min(maxScroll, Math.max(window.innerHeight * 1.05, 1));
   const rawProgress = clamp(window.scrollY / progressDistance, 0, 1);
   const progress = easeScrollProgress(rawProgress);
   const viewportWidth = Math.min(window.innerWidth || 375, document.documentElement.clientWidth || 375);
   const startSize = clamp(viewportWidth * 0.082, 30, 36);
-  const endSize = clamp(viewportWidth * 0.19, 64, 80);
+  const endSize = clamp(viewportWidth * 0.22, 76, 96);
 
-  topbar.classList.toggle("is-compact", progress > 0.98);
+  topbar.classList.toggle("is-compact", progress > 0.02);
   topbar.style.setProperty("--topbar-progress", progress.toFixed(4));
   topbar.style.setProperty("--topbar-brand-size", `${lerp(startSize, endSize, progress).toFixed(2)}px`);
-  topbar.style.setProperty("--topbar-brand-scale-x", lerp(1, 1.14, progress).toFixed(4));
+  topbar.style.setProperty("--topbar-brand-scale-x", lerp(1, 1.16, progress).toFixed(4));
   topbar.style.setProperty("--topbar-brand-line-height", lerp(0.9, 0.8, progress).toFixed(4));
   topbar.style.setProperty("--topbar-padding-top", `${lerp(12, 6, progress).toFixed(2)}px`);
   topbar.style.setProperty("--topbar-padding-bottom", `${lerp(10, 7, progress).toFixed(2)}px`);

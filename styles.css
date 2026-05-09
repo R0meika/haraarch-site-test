@@ -957,7 +957,7 @@ a.project-row:focus-visible {
 
 .project-details {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) max-content;
   gap: 12px 28px;
   padding: 0;
   list-style: none;
@@ -1183,7 +1183,7 @@ a.project-row:focus-visible .project-render img {
   }
 
   .has-project-index .project-page-summary {
-    grid-column: 1 / span 6;
+    grid-column: 1 / span 7;
   }
 
   .has-project-index .project-page-grid > .project-docs {
@@ -1193,7 +1193,11 @@ a.project-row:focus-visible .project-render img {
 
   .has-project-index .project-facts {
     grid-column: 7 / span 5;
-    max-width: 560px;
+    max-width: 480px;
+  }
+
+  .has-project-index .project-page-grid:not(:has(> .project-docs)) .project-page-summary {
+    grid-column: 1 / span 6;
   }
 
   .has-project-index .project-page-grid:has(> .project-docs) .project-facts {
@@ -1397,7 +1401,7 @@ a.project-row:focus-visible .project-render img {
   grid-column: 7 / span 5;
   grid-row: 1;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) max-content;
   gap: 12px 28px;
   align-self: start;
   min-width: 0;
@@ -2328,11 +2332,11 @@ a.project-row:focus-visible .project-render img {
     margin-top: 2px;
     width: 100%;
     max-width: 100%;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) max-content;
     justify-content: start;
     gap: 10px 16px;
     padding-left: 0;
-    font-size: clamp(0.68rem, 2.6vw, 0.78rem);
+    font-size: clamp(0.74rem, 2.9vw, 0.86rem);
   }
 
   .project-facts p {
@@ -2347,17 +2351,17 @@ a.project-row:focus-visible .project-render img {
   }
 
   .project-page-grid .project-facts {
-    gap: 10px 18px;
-    font-size: clamp(0.64rem, 2.45vw, 0.72rem);
+    gap: 10px 16px;
+    font-size: clamp(0.7rem, 2.7vw, 0.8rem);
   }
 
   .project-details {
     width: 100%;
     max-width: 100%;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) max-content;
     justify-content: start;
     gap: 12px 16px;
-    font-size: clamp(0.68rem, 2.6vw, 0.78rem);
+    font-size: clamp(0.74rem, 2.9vw, 0.86rem);
   }
 
   .project-details li {
