@@ -508,7 +508,8 @@ if (projectRows.length) {
     applyProjectFilter("all");
 
     if (window.history?.pushState) {
-      window.history.pushState({ projectFilter: "all" }, "", `${window.location.pathname}#home`);
+      const homePath = window.location.pathname.replace(/index\.html$/i, "") || "/";
+      window.history.pushState({ projectFilter: "all" }, "", homePath);
     }
 
     window.scrollTo({ top: 0, behavior: "smooth" });
