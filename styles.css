@@ -2980,7 +2980,8 @@ a.project-row:focus-visible .project-render img {
   .has-project-index .project-page-grid:not(:has(> .project-docs)) .project-facts {
     grid-template-columns: minmax(0, 1fr) max-content;
     justify-content: space-between;
-    column-gap: clamp(20px, 8vw, 44px);
+    column-gap: 12px;
+    font-size: clamp(0.74rem, 2.9vw, 0.86rem);
   }
 
   .project-page-grid .project-facts p {
@@ -3007,6 +3008,11 @@ a.project-row:focus-visible .project-render img {
 
   .footer-copy {
     max-width: none;
+  }
+
+  .footer-note {
+    text-align: justify;
+    text-align-last: left;
   }
 
   .footer .contact-actions {
