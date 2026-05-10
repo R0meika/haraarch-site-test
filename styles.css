@@ -2915,6 +2915,36 @@ a.project-row:focus-visible .project-render img {
   border-left: 0;
 }
 
+.project-page-grid:has(> .project-docs),
+.project-page-grid:not(:has(> .project-docs)) {
+  position: relative;
+  border-top: 0;
+  border-bottom: 0;
+}
+
+.project-page-grid:has(> .project-docs)::before,
+.project-page-grid:has(> .project-docs)::after,
+.project-page-grid:not(:has(> .project-docs))::before,
+.project-page-grid:not(:has(> .project-docs))::after {
+  content: "";
+  position: absolute;
+  left: var(--page-gutter);
+  right: var(--page-gutter);
+  height: 1px;
+  background: rgba(17, 19, 21, 0.18);
+  pointer-events: none;
+}
+
+.project-page-grid:has(> .project-docs)::before,
+.project-page-grid:not(:has(> .project-docs))::before {
+  top: 0;
+}
+
+.project-page-grid:has(> .project-docs)::after,
+.project-page-grid:not(:has(> .project-docs))::after {
+  bottom: 0;
+}
+
 .project-page-grid:has(> .project-docs) .project-facts::before,
 .has-project-index .project-page-grid:has(> .project-docs) .project-facts::before {
   content: "";
@@ -2932,14 +2962,54 @@ a.project-row:focus-visible .project-render img {
     border-bottom: 0;
   }
 
+  .project-page-grid:has(> .project-docs)::before,
+  .project-page-grid:has(> .project-docs)::after {
+    content: none;
+  }
+
   .project-page-grid:has(> .project-docs) .project-facts::before,
   .has-project-index .project-page-grid:has(> .project-docs) .project-facts::before {
     content: none;
+  }
+
+  .project-facts,
+  .project-page-grid .project-facts,
+  .project-page-grid:has(> .project-docs) .project-facts,
+  .project-page-grid:not(:has(> .project-docs)) .project-facts,
+  .has-project-index .project-page-grid:has(> .project-docs) .project-facts,
+  .has-project-index .project-page-grid:not(:has(> .project-docs)) .project-facts {
+    grid-template-columns: minmax(0, 1fr) max-content;
+    justify-content: space-between;
+    column-gap: clamp(20px, 8vw, 44px);
   }
 
   .project-page-grid .project-facts p {
     display: block;
     white-space: normal;
     overflow-wrap: anywhere;
+  }
+
+  .project-details {
+    grid-template-columns: minmax(0, 1fr) max-content;
+    justify-content: space-between;
+  }
+
+  .project-details li {
+    display: block;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .footer {
+    align-items: stretch;
+    text-align: left;
+  }
+
+  .footer-copy {
+    max-width: none;
+  }
+
+  .footer .contact-actions {
+    justify-content: center;
   }
 }
