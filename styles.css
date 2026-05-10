@@ -2908,3 +2908,38 @@ a.project-row:focus-visible .project-render img {
     transform: none;
   }
 }
+
+.project-page-grid:has(> .project-docs) .project-facts,
+.has-project-index .project-page-grid:has(> .project-docs) .project-facts {
+  position: relative;
+  border-left: 0;
+}
+
+.project-page-grid:has(> .project-docs) .project-facts::before,
+.has-project-index .project-page-grid:has(> .project-docs) .project-facts::before {
+  content: "";
+  position: absolute;
+  top: 14px;
+  bottom: 14px;
+  left: 0;
+  width: 1px;
+  background: rgba(17, 19, 21, 0.24);
+}
+
+@media (max-width: 760px) {
+  .project-page-grid:has(> .project-docs) {
+    border-top: 0;
+    border-bottom: 0;
+  }
+
+  .project-page-grid:has(> .project-docs) .project-facts::before,
+  .has-project-index .project-page-grid:has(> .project-docs) .project-facts::before {
+    content: none;
+  }
+
+  .project-page-grid .project-facts p {
+    display: block;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}
